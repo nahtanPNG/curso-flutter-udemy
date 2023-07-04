@@ -17,6 +17,7 @@
   bool produtoFragil = true;
   bool produtoCaro = false;
 
+  // ignore: dead_code
   print(produtoCaro && produtoFragil); //&& -> AND = E
   print(produtoCaro || produtoFragil); //|| -> OR = OU
   print(produtoCaro ^ produtoFragil); //^ -> XOR = OU Exclusivo(Obrigatoriamente um verdadeiro)

@@ -14,4 +14,5 @@ void main() {
   .toUpperCase()
   .padRight(15, "!");
   print(s5);
+  print(s4);
 }

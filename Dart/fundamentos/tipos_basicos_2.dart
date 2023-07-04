@@ -9,6 +9,7 @@ void main() {
   //List (Aceita repetição, valores homogênios)
   var aprovados = ['Ana', 'Carlos', 'Daniel', 'Leonardo'];
   aprovados.add('Daniel');
+  // ignore: unnecessary_type_check
   print(aprovados is List);
   print(aprovados);
   print(aprovados.elementAt(2));
@@ -23,6 +24,7 @@ void main() {
     'Pedro': '+55 (85) 45455-8989',
   };
 
+  // ignore: unnecessary_type_check
   print(telefones is Map);
   print(telefones);
   print(telefones['João']);
@@ -33,6 +35,7 @@ void main() {
 
   //Set - conjunto (Não aceita repetição, estrutura não indexados)
   var times = {'Furia', 'Pain', 'Loud', 'Imperial'};
+  // ignore: unnecessary_type_check
   print(times is Set);
   times.add('Liquid');
   print(times.length);
