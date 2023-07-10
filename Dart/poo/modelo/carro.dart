@@ -2,29 +2,33 @@ class Carro {
 
   String? nomeCarro;
   int velocidadeMaxima = 0;
-  int velocidadeAtual = 0;
+  int _velocidadeAtual = 0;
 
   Carro([this.nomeCarro, this.velocidadeMaxima = 280]);
 
+  int get velocidadeAtual {
+    return this._velocidadeAtual;
+  }
+
   int acelerar() {
-    if(velocidadeAtual + 5 >= velocidadeMaxima){
-      velocidadeAtual = velocidadeMaxima;
+    if(_velocidadeAtual + 5 >= velocidadeMaxima){
+      _velocidadeAtual = velocidadeMaxima;
     }else{
-      velocidadeAtual += 5;
+      _velocidadeAtual += 5;
     }
-    return velocidadeAtual;
+    return _velocidadeAtual;
   }
 
   int freiar() {
-    if(velocidadeAtual -5 <= 0){
-      velocidadeAtual = 0;
+    if(_velocidadeAtual -5 <= 0){
+      _velocidadeAtual = 0;
     } else{
-      velocidadeAtual -= 5;
+      _velocidadeAtual -= 5;
     }
-    return velocidadeAtual;
+    return _velocidadeAtual;
   }
 
   bool estaNoLimite(){
-    return velocidadeAtual == velocidadeMaxima; 
+    return _velocidadeAtual == velocidadeMaxima; 
   }
 }
