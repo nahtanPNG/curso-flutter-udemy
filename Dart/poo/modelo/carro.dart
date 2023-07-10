@@ -1,13 +1,21 @@
 class Carro {
 
   String? nomeCarro;
-  int velocidadeMaxima = 0;
-  int _velocidadeAtual = 0;
+  final int velocidadeMaxima;
+  int _velocidadeAtual = 0; // _ -> o atributo passa a não ser visível fora da classe
 
   Carro([this.nomeCarro, this.velocidadeMaxima = 280]);
 
-  int get velocidadeAtual {
+  int get velocidadeAtual { //Método Get -> lê o valor do atributo
     return this._velocidadeAtual;
+  }
+
+  void set velocidadeAtual(int novaVelocidade) { //Método Set -> altera o valor do atributo
+    bool deltaValido = (_velocidadeAtual - novaVelocidade).abs() <= 5;
+    if(deltaValido && novaVelocidade >= 0){
+      this._velocidadeAtual = novaVelocidade;
+    }
+    
   }
 
   int acelerar() {

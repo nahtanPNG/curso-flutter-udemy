@@ -12,5 +12,6 @@ main() {
     fusca.freiar();
     print("O ${fusca.nomeCarro} está freiando e sua velocidade atual é ${fusca.velocidadeAtual} KM/H");
   }
-  print("${fusca.nomeCarro} parou!");
+  fusca.velocidadeAtual = 3;
+  print("${fusca.nomeCarro} parou com ${fusca.velocidadeAtual} KM/H!");
 }
