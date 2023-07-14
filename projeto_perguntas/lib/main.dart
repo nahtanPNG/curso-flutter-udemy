@@ -21,16 +21,16 @@ class PerguntaAppState extends State<PerguntaApp> {
       {
         'texto' : 'Qual é o seu animal favorito?',
         'respostas': [
-          {'texto': 'Gato', 'pontuacao': 10}, 
-          {'texto': 'Cachorro',  'pontuacao': 10},
+          {'texto': 'Gato', 'pontuacao': 5}, 
+          {'texto': 'Cachorro',  'pontuacao': 6},
           {'texto': 'Macaco',  'pontuacao': 10},
-          {'texto': 'Cobra', 'pontuacao': 10},
+          {'texto': 'Cobra', 'pontuacao': 2},
           ],
       }, 
       {
         'texto' : 'Qual seu professor favorito?',
         'respostas': [
-          {'texto': 'Maria', 'pontuacao': 10}, 
+          {'texto': 'Maria', 'pontuacao': 2}, 
           {'texto': 'João', 'pontuacao': 8}, 
           {'texto': 'Leo', 'pontuacao': 2}, 
           {'texto': 'Pedro', 'pontuacao': 3},

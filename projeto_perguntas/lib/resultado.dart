@@ -22,7 +22,7 @@ class Resultado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: ,
+      mainAxisAlignment: MainAxisAlignment.center, //Alinhando no centro
       children: [
         Center(
           child: 
@@ -30,6 +30,17 @@ class Resultado extends StatelessWidget {
             fraseResultado,
             style: TextStyle(fontSize: 28),
           ),
+        ),
+        TextButton(
+          child: Text(
+            'Reiniciar?',
+            style: TextStyle(fontSize: 18),
+            ),
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.deepPurple[300],
+            foregroundColor : Colors.white,
+            ),
+          onPressed: quandoReiniciarQuestionario,
         ),
       ],
     );
