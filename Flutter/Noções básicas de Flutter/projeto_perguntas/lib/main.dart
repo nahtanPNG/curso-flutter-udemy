@@ -43,6 +43,7 @@ class PerguntaAppState extends State<PerguntaApp> {
       setState(() {
         _perguntaSelecionada++;
         _pontuacaoTotal += pontuacao;
+        // print(_perguntaSelecionada); -> Debugar
       });
     }
   }
