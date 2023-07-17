@@ -1,53 +1,68 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit; //Estabelencendo a conexão entre o pai (user) com o filho (form)
 
   TransactionForm(this.onSubmit);
 
   @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+
+  final valueController = TextEditingController();
+
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text) ?? 0.0; // ?? -> caso não funcione, define um valor padrão
+
+  if(title.isEmpty || value <= 0){
+    return;
+  }
+
+    widget.onSubmit(title, value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Título',
-                    ),
-                  ),
-                  TextField(
-                    controller: valueController,
-                    decoration: InputDecoration(
-                      labelText: 'Valor(R\$)',
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        child: Text('Nova Transação'),
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.purple,
-                        ),
-                        onPressed: () {
-                          final title = titleController.text;
-                          final value = double.tryParse(valueController.text) ?? 0.0 ; // ?? -> caso não funcione, define um valor padrão
-                          onSubmit(title, value);
-                        },
-                      ),
-                    ],
-                  )
-                ],
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            TextField(
+              controller: titleController,
+              onSubmitted: (_) => _submitForm(), 
+              decoration: InputDecoration(
+                labelText: 'Título',
               ),
             ),
-          );
+            TextField(
+              controller: valueController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true), //Alterando para o Teclado numérico
+              onSubmitted: (_) => _submitForm(), 
+              decoration: InputDecoration(
+                labelText: 'Valor(R\$)',
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  child: Text('Nova Transação'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.purple,
+                  ),
+                  onPressed: _submitForm,
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
