@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -11,24 +12,28 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? Column(
-            //Se não houver elementos em transactions -> mostra a imagem
-            children: [
-              SizedBox(height: 20), //Espaçamento
-              Text(
-                'Nenhuma Transação Cadastrada',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              SizedBox(height: 20),
-              Container(
-                height: 200,
-                child: Image.asset(
-                  'assets/images/waiting.png',
-                  fit: BoxFit
-                      .cover, //Consegue ajustar a imagem quando o pai tem altura definida(Container)
-                ),
-              ),
-            ],
+        ? LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                //Se não houver elementos em transactions -> mostra a imagem
+                children: [
+                  SizedBox(height: 20), //Espaçamento
+                  Text(
+                    'Nenhuma Transação Cadastrada',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit
+                          .cover, //Consegue ajustar a imagem quando o pai tem altura definida(Container)
+                    ),
+                  ),
+                ],
+              );
+            },
           )
         : ListView.builder(
             itemCount: transactions.length,
@@ -59,13 +64,24 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(
                     DateFormat('d MMM y').format(tr.date),
                   ),
-                  trailing: IconButton(
-                    //Botão para apagar a transação
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).colorScheme.error,
-                    onPressed: () => onRemove(
-                        tr.id), //passando o id para a função onRemove
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 400
+                      ? TextButton.icon(
+                          onPressed: () => onRemove(tr.id),
+                          icon: Icon(Icons.delete),
+                          label: Text('Excluir!'),
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStatePropertyAll<Color>(
+                              Theme.of(context).colorScheme.error
+                            ),
+                          ),
+                        )
+                      : IconButton(
+                          //Botão para apagar a transação
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).colorScheme.error,
+                          onPressed: () => onRemove(
+                              tr.id), //passando o id para a função onRemove
+                        ),
                 ),
               );
             });
