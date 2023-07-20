@@ -93,19 +93,20 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
-  Widget _getIconButton(IconData icon, Function() fn){
-    return Platform.isIOS ?
-    GestureDetector(onTap: fn, child: Icon(icon)) :
-    IconButton(onPressed: fn, icon: Icon(icon));
-
+  Widget _getIconButton(IconData icon, Function() fn) {
+    return Platform.isIOS
+        ? GestureDetector(onTap: fn, child: Icon(icon))
+        : IconButton(onPressed: fn, icon: Icon(icon));
   }
 
   @override
   Widget build(BuildContext context) {
     //Responsividade
-
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
+
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
     final actions = [
       //Adicionando botão no appbar
@@ -135,7 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
             .padding
             .top; //Altura da tela menos a altura do appBar menos a altura da statusbar
 
-    final bodyPage = SingleChildScrollView(
+    final bodyPage = SafeArea(
+        child: SingleChildScrollView(
       //Permite a rolagem na aplicação
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -152,17 +154,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
         ],
       ),
-    );
+    ));
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
-            middle: const Text('Despesas Pessoais'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: actions,
+              middle: const Text('Despesas Pessoais'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: actions,
+              ),
             ),
-          ), child: bodyPage,)
+            child: bodyPage,
+          )
         : Scaffold(
             appBar: appBar,
             body: bodyPage,
