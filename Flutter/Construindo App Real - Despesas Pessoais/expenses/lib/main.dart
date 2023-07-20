@@ -14,29 +14,28 @@ class ExpensesApp extends StatelessWidget {
     final ThemeData tema = ThemeData();
 
     return MaterialApp(
-      home: MyHomePage(),
-      theme: tema.copyWith(
-        colorScheme: tema.colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary: Colors.amber,
-        ),
-        textTheme: tema.textTheme.copyWith(
-          titleLarge: tema.textTheme.titleLarge!.copyWith(
-            fontFamily: 'TitilliumWeb',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+        home: MyHomePage(),
+        theme: tema.copyWith(
+          colorScheme: tema.colorScheme.copyWith(
+            primary: Colors.purple,
+            secondary: Colors.amber,
           ),
-        ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontFamily: 'TitilliumWeb',
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          textTheme: tema.textTheme.copyWith(
+            titleLarge: tema.textTheme.titleLarge!.copyWith(
+              fontFamily: 'TitilliumWeb',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-        ),
-      )
-    );
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(
+              fontFamily: 'TitilliumWeb',
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ));
   }
 }
 
@@ -46,12 +45,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
-      return tr.date.isAfter(DateTime.now().subtract( //Verifica se a data da transação é antes de 7 dias atrás ou não
+      return tr.date.isAfter(DateTime.now().subtract(
+        //Verifica se a data da transação é antes de 7 dias atrás ou não
         Duration(days: 7),
       ));
     }).toList();
@@ -75,38 +74,52 @@ class _MyHomePageState extends State<MyHomePage> {
   _removeTransaction(String id) {
     setState(() {
       _transactions.removeWhere((tr) => tr.id == id);
-  });
-    
+    });
   }
 
-    _openTransactionFormModal(BuildContext context) {
-      showModalBottomSheet(
-        context: context, 
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
         builder: (_) {
           return TransactionForm(_addTransaction);
         });
-    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    //Responsividade
+    final appBar = AppBar(
+      title: Text('Despesas Pessoais'),
+      actions: [
+        //Adicionando botão no appbar
+        IconButton(
+          icon: Icon(Icons.add_box),
+          onPressed: () => _openTransactionFormModal(context),
+        ),
+      ],
+    );
+
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context)
+            .padding
+            .top; //Altura da tela menos a altura do appBar menos a altura da statusbar
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Despesas Pessoais'),
-        actions: [
-          //Adicionando botão no appbar
-          IconButton(
-            icon: Icon(Icons.add_box),
-            onPressed: () => _openTransactionFormModal(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         //Permite a rolagem na aplicação
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _removeTransaction),
+            Container(
+              child: Chart(_recentTransactions),
+              height: availableHeight * 0.25,
+            ),
+            Container(
+              child: TransactionList(_transactions, _removeTransaction),
+              height: availableHeight * 0.75,
+            ),
           ],
         ),
       ),
