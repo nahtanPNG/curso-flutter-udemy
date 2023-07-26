@@ -105,9 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
-    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
-    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
-
     final actions = [
       //Adicionando botão no appbar
       if (isLandscape)
