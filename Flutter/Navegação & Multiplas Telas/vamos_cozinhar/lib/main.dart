@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/tabs_screen.dart';
+import 'package:vamos_cozinhar/screens/meal_recipe_screen.dart';
 import 'screens/categories_screen.dart';
 import 'screens/categories_meals_screen.dart';
 import 'utils/app_routes.dart';
@@ -25,9 +27,21 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         //Estabelecendo rotas
-        AppRoutes.HOME: (ctx) => CategoriesScreen(), //Home -> /
+        AppRoutes.HOME: (ctx) => TabsScreen(), //Home -> /
         AppRoutes.CATEGORIES_MEALS: (ctx) => CategoriesMealsScreen(),
+        AppRoutes.MEAL_RECIPE: (ctx) => MealRecipeScreen(),
       },
+      // onGenerateRoute: (settings) { -> Criando rotas dinamicas baseada no nome da rota
+      //   if(settings.name == '/alguma-coisa') {
+      //     return null;
+      //   } else {
+      //     return MaterialPageRoute(builder: (_) => CategoriesScreen());
+      //   }
+      // },
+
+      onUnknownRoute: ((settings) { //Cria uma rota caso não exista uma rota definida em routes (acima)
+        return MaterialPageRoute(builder: (_) => CategoriesScreen());
+      }),
     );
   }
 }
