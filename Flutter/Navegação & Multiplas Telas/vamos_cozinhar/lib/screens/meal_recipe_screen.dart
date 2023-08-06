@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vamos_cozinhar/models/meal.dart';
 
 class MealRecipeScreen extends StatelessWidget {
-  const MealRecipeScreen({super.key});
+  final Function(Meal) onToggleFavorite;
+  final bool Function(Meal) isFavorite;
+
+  const MealRecipeScreen(this.onToggleFavorite, this.isFavorite, {super.key});
 
   Widget _createSectionTitle(BuildContext context, String title) {
     return Container(
@@ -54,6 +57,7 @@ class MealRecipeScreen extends StatelessWidget {
                   itemCount: meal.ingredients.length,
                   itemBuilder: (ctx, index) {
                     return Card(
+                      color: Theme.of(context).colorScheme.secondary,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 5,
@@ -61,7 +65,6 @@ class MealRecipeScreen extends StatelessWidget {
                         ),
                         child: Text(meal.ingredients[index]),
                       ),
-                      color: Theme.of(context).colorScheme.secondary,
                     );
                   }),
             ),
@@ -74,7 +77,8 @@ class MealRecipeScreen extends StatelessWidget {
                     children: [
                       ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           child: Text('${index + 1}'),
                         ),
                         title: Text(meal.steps[index]),
@@ -87,6 +91,17 @@ class MealRecipeScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          isFavorite(meal) ?
+          Icons.favorite :
+          Icons.favorite_border,
+          color: Colors.black,
+        ),
+        onPressed: () {
+          onToggleFavorite(meal); //Pode ser passado um resultado pelo pop
+        },
       ),
     );
   }
